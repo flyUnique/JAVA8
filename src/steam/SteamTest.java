@@ -123,7 +123,9 @@ public class SteamTest {
 	@Test
 	public void match() {
 		//短路操作
-		boolean b = menu.stream().anyMatch(Dish::isVegetarian);
+
+		boolean b = menu.stream().allMatch(Dish::isVegetarian);
+		System.out.println(new ArrayList<Dish>().stream().allMatch(Dish::isVegetarian));
 
 		menu.stream().allMatch(d -> d.getCalories() < 1000);
 
@@ -154,6 +156,19 @@ public class SteamTest {
 		int min = IntStream.rangeClosed(1, 10).reduce(0, Integer::min);
 
 		OptionalInt optionalSum = IntStream.rangeClosed(1, 10).reduce(Integer::sum);
+
+		//把两个值结合起来生成一个新值，它是一个不可变的归约，以下是错误的使用
+		Stream<Integer> stream = Arrays.asList(1, 2, 3, 4, 5, 6).stream();
+		List<Integer> numbers = stream.reduce(
+				new ArrayList(),
+				(List<Integer> l, Integer e) -> {
+					l.add(e);
+					return l;
+				},
+				(List<Integer> l1, List<Integer> l2) -> {
+					l1.addAll(l2);
+					return l1;
+				});
 	}
 
 	@Test
@@ -202,12 +217,12 @@ public class SteamTest {
 
 		//斐波纳契元组
 		Stream.iterate(new int[]{0, 1},
-				t -> new int[]{t[1], t[0]+t[1]})
+				t -> new int[]{t[1], t[0] + t[1]})
 				.limit(20)
-				.forEach(t -> System.out.println("(" + t[0] + "," + t[1] +")"));
+				.forEach(t -> System.out.println("(" + t[0] + "," + t[1] + ")"));
 
 		Stream.iterate(new int[]{0, 1},
-				t -> new int[]{t[1],t[0] + t[1]})
+				t -> new int[]{t[1], t[0] + t[1]})
 				.limit(10)
 				.map(t -> t[0])
 				.forEach(System.out::println);
@@ -215,6 +230,7 @@ public class SteamTest {
 
 	@Test
 	public void generate() {
+		// 试用于无状态情形
 		Stream.generate(Math::random)
 				.limit(5)
 				.forEach(System.out::println);
