@@ -200,11 +200,11 @@ public interface Spliterator<T> {
 
 > 设计经验的归纳总结被称为设计模式
 
- 策略模式 (strategy)
- 模板方法 (template method)
- 观察者模式(observer)
- 责任链模式(chain of responsablity)
- 工厂模式 (abstract factory)
+-  策略模式 (strategy)
+-  模板方法 (template method)
+-  观察者模式(observer)
+-  责任链模式(chain of responsablity)
+-  工厂模式 (abstract factory)
 
 ### 策略模式(strategy)
 
